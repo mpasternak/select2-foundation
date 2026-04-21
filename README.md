@@ -1,6 +1,9 @@
 # Select2-Foundation
 
-select2 (v4) Theme for Zurb Foundation (v6)
+[![CI](https://github.com/mpasternak/select2-foundation/actions/workflows/ci.yml/badge.svg)](https://github.com/mpasternak/select2-foundation/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./MIT-LICENSE)
+
+select2 (v4) Theme for Zurb Foundation (v6.9)
 
 [Examples](https://select2-foundation.herokuapp.com/ "select2-foundation examples")
 
@@ -13,13 +16,17 @@ In order to apply select2-foundation theme to your project, add the following fi
     <link rel="stylesheet" href="select2.css">
     <link rel="stylesheet" href="select2-foundation-theme.css">
 
+### npm
+
+    npm install foundation-sites select2 select2-foundation
+
 ### Bower
 <pre><code>"dependencies": {
-    "foundation-sites" : "^6.0.0",
-    "select2" : "latest",
-    "select2-foundation" : "https://github.com/egemensarica/select2-foundation.git#v6"
+    "foundation-sites" : "^6.9.0",
+    "select2" : "^4.0.13",
+    "select2-foundation" : "https://github.com/zflat/select2-foundation.git"
   }</code></pre>
-  
+
 ### Rails (ruby gem)
 
 Installation is similar to installing foundation-rails.
@@ -67,14 +74,21 @@ Navigate to the root path to view the demo page.
 
 Install build tools:
 
-* npm
-* grunt-cli
+* npm (Node 18+)
 
-Run grunt tasks. See grunt help for available tasks.
+Then:
 
-      grunt sass
+      npm install
+      npm run build         # builds both expanded and compressed CSS
+      npm run watch         # watch mode (expanded only)
 
 ## Changelog
+
+### 0.2.0
+ * Target Foundation 6.9 (`foundation-sites ^6.9.0`, `foundation-rails ~> 6.9`)
+ * Replace grunt build with `sass` (dart-sass) via npm scripts
+ * Drop direct `sass` gem dependency
+ * GitHub Actions CI for gem install and npm build
 
 ### 0.1.1
  * Release to ruby gems
