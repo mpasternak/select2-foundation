@@ -1,6 +1,6 @@
 {
   "name": "select2-foundation",
-  "version": "0.0.2",
+  "version": "0.2.0",
   "description": "Select2 Foundation Theme",
   "main": [
     "./dist/select2-foundation-theme.css"
@@ -8,22 +8,22 @@
   "author": {
     "name": "William Wedler"
   },
+  "license": "MIT",
   "dependencies": {
-"foundation-sites" : "^6.0.0",
-"select2" : "latest"
-  },
-  "devDependencies": {
-    "grunt": "~0.4.5"
+    "foundation-sites": "^6.9.0",
+    "select2": "^4.0.13"
   },
   "keywords": [
     "Select2 Foundation",
     "select2",
     "Foundation"
   ],
-   "ignore": [
+  "ignore": [
     ".gitignore",
     ".gitkeep",
+    ".github",
     "Gemfile",
+    "Gemfile.lock",
     "README.md",
     "Rakefile",
     "select2-foundation.gemspec",
@@ -33,5 +33,5 @@
     "lib/select2-foundation/",
     "lib/tasks",
     "lib/select2-foundation.rb"
- ]
+  ]
 }

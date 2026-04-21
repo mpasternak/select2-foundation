@@ -1,22 +1,45 @@
 {
-  "name": "select2-foundation_theme",
-  "version": "0.0.2",
-  "author": {
-    "name": "William Wedler",
-    "url": ""
-  },
+  "name": "select2-foundation-theme",
+  "version": "0.2.0",
   "description": "Select2 Foundation Theme",
-  "dependencies": {
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-contrib-sass": "^1.0.0"
+  "author": {
+    "name": "William Wedler"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zflat/select2-foundation.git"
+  },
+  "main": "dist/select2-foundation-theme.css",
+  "scripts": {
+    "build": "npm run build:dev && npm run build:prod",
+    "build:dev": "sass --no-source-map --load-path=node_modules/foundation-sites/scss --style=expanded src/sass/select2-foundation.scss dist/select2-foundation-theme.css",
+    "build:prod": "sass --no-source-map --load-path=node_modules/foundation-sites/scss --style=compressed src/sass/select2-foundation.scss dist/select2-foundation-theme.min.css",
+    "watch": "sass --load-path=node_modules/foundation-sites/scss --watch src/sass/select2-foundation.scss:dist/select2-foundation-theme.css"
+  },
+  "peerDependencies": {
+    "foundation-sites": "^6.9.0",
+    "select2": "^4.0.13"
+  },
+  "peerDependenciesMeta": {
+    "foundation-sites": {
+      "optional": false
+    },
+    "select2": {
+      "optional": false
+    }
   },
   "devDependencies": {
-    "grunt": "~0.4.5"
+    "foundation-sites": "^6.9.0",
+    "sass": "^1.77.0"
   },
   "keywords": [
-    "Select2-Foundation-Theme"
+    "select2",
+    "foundation",
+    "foundation-sites",
+    "theme"
   ],
   "engines": {
-    "node": ">=0.8.15"
+    "node": ">=16"
   }
 }
