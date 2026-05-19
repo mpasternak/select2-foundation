@@ -20,7 +20,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-          bundler-cache: false
+          bundler-cache: true
 
       - name: Build gem
         run: gem build select2-foundation.gemspec
@@ -30,22 +30,8 @@ jobs:
           gem install --local select2-foundation-*.gem
           gem list select2-foundation
 
-      - name: Require the gem
-        run: |
-          ruby -e "require 'select2-foundation'; raise 'VERSION missing' unless Select2Foundation::VERSION; puts 'Loaded select2-foundation ' + Select2Foundation::VERSION"
-
-      - name: Resolve with foundation-rails 6.9 in a sample app
-        run: |
-          mkdir -p ci-resolve && cd ci-resolve
-          cat > Gemfile <<'EOF'
-          source 'https://rubygems.org'
-          gem 'rails', '~> 7.1'
-          gem 'foundation-rails', '~> 6.9'
-          gem 'select2-rails', '~> 4.0'
-          gem 'select2-foundation', path: '..'
-          EOF
-          bundle install
-          bundle list | grep -E "select2-foundation|foundation-rails|select2-rails"
+      - name: Run gem test suite against test/styleguide06
+        run: bundle exec rake test
 
   npm:
     name: npm (node ${{ matrix.node }})

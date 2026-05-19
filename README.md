@@ -16,9 +16,12 @@ In order to apply select2-foundation theme to your project, add the following fi
     <link rel="stylesheet" href="select2.css">
     <link rel="stylesheet" href="select2-foundation-theme.css">
 
-### npm
+### npm (from git)
 
-    npm install foundation-sites select2 select2-foundation
+`select2-foundation` is not published on npm. Pull it directly from this repository:
+
+    npm install foundation-sites select2 \
+      "select2-foundation@github:zflat/select2-foundation"
 
 ### Bower
 <pre><code>"dependencies": {

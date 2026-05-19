@@ -5,5 +5,12 @@ source 'https://rubygems.org'
 # development dependencies will be added by default to the :development group.
 gemspec
 
-# To use a debugger
-# gem 'byebug', group: [:development, :test]
+# Dependencies needed to run `rake test` against the test/styleguide06
+# sample Rails app. The test app is a pure asset-pipeline host, so we only
+# need the railties needed for action_controller + sprockets.
+group :development, :test do
+  gem 'rails', '~> 7.1.0'
+  gem 'sprockets-rails'
+  gem 'sassc-rails'
+  gem 'jquery-rails'
+end
