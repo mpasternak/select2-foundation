@@ -31,7 +31,7 @@ jobs:
 
       - name: Install built gem (with runtime deps)
         run: |
-          gem install --local select2-foundation-*.gem
+          gem install select2-foundation-*.gem
           gem list select2-foundation
 
       - name: Run gem test suite against test/styleguide06
