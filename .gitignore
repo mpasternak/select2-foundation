@@ -4,8 +4,6 @@ pkg/
 node_modules/
 package-lock.json
 *.gem
-test/styleguide*/db/*.sqlite3
-test/styleguide*/db/*.sqlite3-journal
 test/styleguide*/log/*.log
 test/styleguide*/tmp/
 test/styleguide*/public/assets/*

@@ -1,6 +1,6 @@
 # Select2-Foundation
 
-[![CI](https://github.com/mpasternak/select2-foundation/actions/workflows/ci.yml/badge.svg)](https://github.com/mpasternak/select2-foundation/actions/workflows/ci.yml)
+[![CI](https://github.com/zflat/select2-foundation/actions/workflows/ci.yml/badge.svg)](https://github.com/zflat/select2-foundation/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./MIT-LICENSE)
 
 select2 (v4) Theme for Zurb Foundation (v6.9)
@@ -65,13 +65,28 @@ Configure select2 To apply the theme by passing `foundation` to the theme option
 
 ### Styleguide rails app
 
-Run the styleguide application found under `test/`
+A sample Rails app lives in `test/styleguide06/`. It renders the theme against
+Foundation 6.9 so you can see changes in a browser.
 
-      bundle
-
+      cd test/styleguide06
+      bundle install
       bundle exec rails s
 
-Navigate to the root path to view the demo page.
+Navigate to <http://localhost:3000/> to view the demo page.
+
+Requires Ruby 3.2 or newer, because the asset pipeline compiles Foundation's
+Sass with dart-sass.
+
+### Running the tests
+
+From the repository root:
+
+      bundle install
+      bundle exec rake test
+
+The suite boots `test/styleguide06`, renders the styleguide page and compiles
+the asset bundles, so a broken Sass import or a missing dependency fails the
+build rather than showing up as a 500 in the browser.
 
 ### Building `dist`
 
@@ -91,7 +106,13 @@ Then:
  * Target Foundation 6.9 (`foundation-sites ^6.9.0`, `foundation-rails ~> 6.9`)
  * Replace grunt build with `sass` (dart-sass) via npm scripts
  * Drop direct `sass` gem dependency
- * GitHub Actions CI for gem install and npm build
+ * Ship `app/views` in the gem, so the styleguide partial reaches host apps
+ * Require `foundation-rails` and `select2-rails` from the gem, so their asset
+   paths are registered without the host app listing them again
+ * Modernise the `test/styleguide06` sample app for Rails 7: Sprockets 4
+   manifest, dart-sass instead of the end-of-life libsass, Foundation 6.9
+   settings, no turbolinks
+ * GitHub Actions CI for gem install, test suite, sample app boot and npm build
 
 ### 0.1.1
  * Release to ruby gems

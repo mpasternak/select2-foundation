@@ -12,19 +12,20 @@ concurrency:
 
 jobs:
   gem:
+    # Checks the gemspec across the whole Ruby range it claims to support.
+    # No bundle here on purpose: this is the "someone runs gem install" path.
     name: gem (ruby ${{ matrix.ruby }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        ruby: ["3.0", "3.1", "3.2", "3.3"]
+        ruby: ["3.0", "3.1", "3.2", "3.3", "3.4"]
     steps:
       - uses: actions/checkout@v4
 
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-          bundler-cache: true
 
       - name: Build gem
         run: gem build select2-foundation.gemspec
@@ -34,8 +35,65 @@ jobs:
           gem install select2-foundation-*.gem
           gem list select2-foundation
 
-      - name: Run gem test suite against test/styleguide06
+      - name: Require the gem and its engine
+        run: ruby -e 'require "select2-foundation"; puts Select2Foundation::VERSION'
+
+      - name: Verify the styleguide view ships in the gem
+        run: |
+          gem contents select2-foundation | grep -q 'app/views/select2-foundation/styleguide/_examples.html.erb' \
+            || { echo "styleguide partial missing from the packaged gem"; exit 1; }
+
+  test:
+    # Runs the suite against the test/styleguide06 sample app. Needs Ruby 3.2+
+    # because dart-sass (sass-embedded) does.
+    name: test (ruby ${{ matrix.ruby }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: ["3.2", "3.3", "3.4"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+
+      - name: Run test suite
         run: bundle exec rake test
+
+  styleguide:
+    # Boots the sample app the same way a contributor does and checks the demo
+    # page and both asset bundles actually come back.
+    name: styleguide app boots
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+
+      - name: Install app dependencies
+        working-directory: test/styleguide06
+        run: bundle install --jobs 4
+
+      - name: Boot the app and fetch the styleguide page
+        working-directory: test/styleguide06
+        run: |
+          bundle exec rails s -p 3000 -b 127.0.0.1 &
+          timeout 120 bash -c 'until curl -sf -o /dev/null http://127.0.0.1:3000/; do sleep 1; done'
+
+          curl -sf http://127.0.0.1:3000/ -o page.html
+          grep -q 'js-example-basic-single-foundation' page.html \
+            || { echo "styleguide markup missing"; exit 1; }
+
+          for path in $(grep -oE '(href|src)="/assets/[^"]*"' page.html | sed -E 's/.*"(\/assets\/[^"]*)"/\1/'); do
+            echo "fetching $path"
+            curl -sf -o /dev/null "http://127.0.0.1:3000$path" \
+              || { echo "asset $path failed to build"; exit 1; }
+          done
 
   npm:
     name: npm (node ${{ matrix.node }})
