@@ -92,7 +92,7 @@ build rather than showing up as a 500 in the browser.
 
 Install build tools:
 
-* npm (Node 18+)
+* npm (Node 20.19+, the minimum dart-sass supports)
 
 Then:
 
