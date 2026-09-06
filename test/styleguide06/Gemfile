@@ -1,16 +1,11 @@
 # -*- mode: ruby -*-
 source 'https://rubygems.org'
 
-# 'select2-foundation' itself (gem under test)
-gemspec path: "../../"
+# The styleguide app runs on exactly the same gems as `rake test` does from the
+# repository root, so it reuses that Gemfile instead of restating it. Keeping
+# two lists in sync by hand is how this app drifted out of working order before.
+eval_gemfile File.expand_path('../../Gemfile', __dir__)
 
-gem 'rails', '~> 7.1.0'
-
-# Asset pipeline
-gem 'sprockets-rails'
-gem 'sassc-rails'
-
-gem 'jquery-rails'
-
-gem 'foundation-rails', '~> 6.9'
-gem 'select2-rails', '~> 4.0'
+# Only needed here: `rake test` drives the app in-process, `rails s` needs a
+# web server.
+gem 'puma'

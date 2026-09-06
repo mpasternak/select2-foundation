@@ -5,12 +5,15 @@ source 'https://rubygems.org'
 # development dependencies will be added by default to the :development group.
 gemspec
 
-# Dependencies needed to run `rake test` against the test/styleguide06
-# sample Rails app. The test app is a pure asset-pipeline host, so we only
-# need the railties needed for action_controller + sprockets.
+# What the test/styleguide06 sample app needs on top of the gem itself, both
+# for `rake test` from here and for `rails s` inside the app (which loads this
+# file through eval_gemfile). The app is a pure asset-pipeline host with no
+# database, so only the railties behind action_controller + sprockets are here.
 group :development, :test do
   gem 'rails', '~> 7.1.0'
   gem 'sprockets-rails'
-  gem 'sassc-rails'
+  # dart-sass, not sassc: libsass cannot parse the `sass:math` module that
+  # Foundation 6.9 uses, and it has been end-of-life since 2020.
+  gem 'dartsass-sprockets'
   gem 'jquery-rails'
 end
