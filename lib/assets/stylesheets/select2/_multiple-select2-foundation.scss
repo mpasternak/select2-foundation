@@ -54,7 +54,7 @@
             cursor: pointer;
             display: inline-block;
             font-weight: bold;
-            margin-right: $padding-base-vertical / 2;
+            margin-right: $padding-base-vertical * 0.5;
 
             &:hover {
                 color: $select-triangle-color
