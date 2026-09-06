@@ -12,8 +12,9 @@ Gem::Specification.new do |s|
   s.description = "Simple css to make select2 widgets fit in with foundation"
   s.license     = "MIT"
 
-  s.files = Dir["{lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
-  s.test_files = Dir["test/**/*"]
+  # app/ holds the styleguide partial the engine exposes to host apps, so it
+  # has to ship with the gem.
+  s.files = Dir["{app,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
   s.required_ruby_version = ">= 2.7"
 
@@ -21,6 +22,5 @@ Gem::Specification.new do |s|
   s.add_dependency "select2-rails", "~> 4.0"
   s.add_dependency "foundation-rails", ">= 6.9", "< 7"
 
-  s.add_development_dependency "bundler", "~> 2.0"
   s.add_development_dependency "rake", "~> 13.0"
 end
